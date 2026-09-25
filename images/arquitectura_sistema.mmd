@@ -51,47 +51,17 @@ flowchart TD
     PRESENTACION --> NEGOCIO
     NEGOCIO --> DATOS
 
-    %% Integraciones
+    %% =========================
+    %% INTEGRACIONES
+    %% =========================
+    Catalogo -->|"consulta stock"| ERP
     Pedidos -->|"procesa pago"| Pago
     Pedidos -->|"gestiona entrega"| Envio
     Pedidos -->|"emite comprobante"| Facturacion
-    Catalogo -->|"consulta stock"| ERP
-
-    %% =========================
-    %% DISTRIBUCIÓN HORIZONTAL
-    %% =========================
-    Cliente ~~~ Seller
-    Seller ~~~ Admin
-
-    Usuarios ~~~ Sellers
-    Sellers ~~~ Catalogo
-    Catalogo ~~~ Carrito
-    Carrito ~~~ Pedidos
-
-    Pago ~~~ ERP
-    ERP ~~~ Envio
-    Envio ~~~ Facturacion
 
     %% =========================
     %% ESTILOS
     %% =========================
-    style ACTORES fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style PRESENTACION fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style NEGOCIO fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style DATOS fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style EXTERNOS fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-
-    style Cliente fill:#222,stroke:#fff,color:#fff
-    style Seller fill:#222,stroke:#fff,color:#fff
-    style Admin fill:#222,stroke:#fff,color:#fff
-    style Web fill:#222,stroke:#fff,color:#fff
-    style Usuarios fill:#222,stroke:#fff,color:#fff
-    style Sellers fill:#222,stroke:#fff,color:#fff
-    style Catalogo fill:#222,stroke:#fff,color:#fff
-    style Carrito fill:#222,stroke:#fff,color:#fff
-    style Pedidos fill:#222,stroke:#fff,color:#fff
-    style BD fill:#222,stroke:#fff,color:#fff
-    style Pago fill:#222,stroke:#fff,color:#fff
-    style ERP fill:#222,stroke:#fff,color:#fff
-    style Envio fill:#222,stroke:#fff,color:#fff
-    style Facturacion fill:#222,stroke:#fff,color:#fff
+    classDef darkBox fill:#1e1e1e,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    class ACTORES,PRESENTACION,NEGOCIO,DATOS,EXTERNOS darkBox
+    class Cliente,Seller,Admin,Web,Usuarios,Sellers,Catalogo,Carrito,Pedidos,BD,Pago,ERP,Envio,Facturacion darkBox

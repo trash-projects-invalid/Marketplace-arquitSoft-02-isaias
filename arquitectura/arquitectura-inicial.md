@@ -26,11 +26,11 @@ A partir del análisis del sistema (actores, requisitos, atributos de calidad, r
 └────────────────────────────────────┘
 ```
 
-| Capa              | Pregunta que responde              |
-| ----------------- | ---------------------------------- |
-| Presentación      | ¿Cómo interactúa el usuario?       |
-| Lógica de negocio | ¿Qué hace el sistema?              |
-| Datos             | ¿Dónde se almacena la información? |
+| Capa | Pregunta que responde |
+|------|------------------------|
+| Presentación | ¿Cómo interactúa el usuario? |
+| Lógica de negocio | ¿Qué hace el sistema? |
+| Datos | ¿Dónde se almacena la información? |
 
 ### Responsabilidades por capa
 
@@ -39,6 +39,8 @@ A partir del análisis del sistema (actores, requisitos, atributos de calidad, r
 - **Datos:** persiste la información de usuarios, sellers, productos, carrito, pedidos y demás entidades del sistema en una base de datos.
 
 ## 2. Diagrama de arquitectura
+
+El código fuente Mermaid también se encuentra disponible en [`/images/arquitectura_sistema.mmd`](../images/arquitectura_sistema.mmd) para poder reutilizarlo en otros documentos.
 
 ```mermaid
 flowchart TD
@@ -94,54 +96,20 @@ flowchart TD
     PRESENTACION --> NEGOCIO
     NEGOCIO --> DATOS
 
-    %% Integraciones
+    %% =========================
+    %% INTEGRACIONES
+    %% =========================
+    Catalogo -->|"consulta stock"| ERP
     Pedidos -->|"procesa pago"| Pago
     Pedidos -->|"gestiona entrega"| Envio
     Pedidos -->|"emite comprobante"| Facturacion
-    Catalogo -->|"consulta stock"| ERP
-
-    %% =========================
-    %% DISTRIBUCIÓN HORIZONTAL
-    %% =========================
-    Cliente ~~~ Seller
-    Seller ~~~ Admin
-
-    Usuarios ~~~ Sellers
-    Sellers ~~~ Catalogo
-    Catalogo ~~~ Carrito
-    Carrito ~~~ Pedidos
-
-    Pago ~~~ ERP
-    ERP ~~~ Envio
-    Envio ~~~ Facturacion
 
     %% =========================
     %% ESTILOS
     %% =========================
-    style ACTORES fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style PRESENTACION fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style NEGOCIO fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style DATOS fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-    style EXTERNOS fill:#222,stroke:#fff,stroke-width:2px,color:#fff
-
-    style Cliente fill:#222,stroke:#fff,color:#fff
-    style Seller fill:#222,stroke:#fff,color:#fff
-    style Admin fill:#222,stroke:#fff,color:#fff
-
-    style Web fill:#222,stroke:#fff,color:#fff
-
-    style Usuarios fill:#222,stroke:#fff,color:#fff
-    style Sellers fill:#222,stroke:#fff,color:#fff
-    style Catalogo fill:#222,stroke:#fff,color:#fff
-    style Carrito fill:#222,stroke:#fff,color:#fff
-    style Pedidos fill:#222,stroke:#fff,color:#fff
-
-    style BD fill:#222,stroke:#fff,color:#fff
-
-    style Pago fill:#222,stroke:#fff,color:#fff
-    style ERP fill:#222,stroke:#fff,color:#fff
-    style Envio fill:#222,stroke:#fff,color:#fff
-    style Facturacion fill:#222,stroke:#fff,color:#fff
+    classDef darkBox fill:#1e1e1e,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    class ACTORES,PRESENTACION,NEGOCIO,DATOS,EXTERNOS darkBox
+    class Cliente,Seller,Admin,Web,Usuarios,Sellers,Catalogo,Carrito,Pedidos,BD,Pago,ERP,Envio,Facturacion darkBox
 ```
 
 ## 3. Descripción
@@ -150,6 +118,9 @@ La arquitectura inicial se organiza en tres capas principales:
 
 - **Presentación:** permite la interacción de los usuarios con el sistema mediante la aplicación web y la API REST.
 - **Lógica de negocio:** contiene los principales módulos responsables de las funcionalidades del sistema: usuarios, sellers, catálogo, carrito y pedidos.
-- **Datos:** permite almacenar y consultar la información mediante una base de datos.
+- **Datos:** permite almacenar y consultar la información mediante una base de datos, ubicada a un costado de la capa de negocio.
 
-Además, el módulo de **Pedidos** se integra con sistemas externos como la **pasarela de pago**, el **servicio de envío** y el **servicio de facturación**, mientras que el módulo de **Catálogo** consulta el stock desde el **ERP** corporativo.
+Además:
+
+- El módulo de **Catálogo** consulta el stock desde el **ERP** corporativo.
+- El módulo de **Pedidos** se integra con la **pasarela de pago** para procesar el cobro, con el **servicio de envío** para gestionar la entrega y con el **servicio de facturación** para emitir el comprobante de pago.

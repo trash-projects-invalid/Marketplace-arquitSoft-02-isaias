@@ -26,11 +26,11 @@ A partir del análisis del sistema (actores, requisitos, atributos de calidad, r
 └────────────────────────────────────┘
 ```
 
-| Capa | Pregunta que responde |
-|------|------------------------|
-| Presentación | ¿Cómo interactúa el usuario? |
-| Lógica de negocio | ¿Qué hace el sistema? |
-| Datos | ¿Dónde se almacena la información? |
+| Capa              | Pregunta que responde              |
+| ----------------- | ---------------------------------- |
+| Presentación      | ¿Cómo interactúa el usuario?       |
+| Lógica de negocio | ¿Qué hace el sistema?              |
+| Datos             | ¿Dónde se almacena la información? |
 
 ### Responsabilidades por capa
 

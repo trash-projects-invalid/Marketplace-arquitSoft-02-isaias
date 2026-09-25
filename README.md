@@ -1,6 +1,6 @@
 # Marketplace de productos para mascotas
 
-## nombre
+## Nombre
 
 isaias ramos lopez
 

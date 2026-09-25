@@ -2,7 +2,7 @@
 
 ## nombre
 
-Integrante 1
+isaias ramos lopez
 
 ## Descripción
 

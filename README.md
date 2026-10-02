@@ -25,12 +25,21 @@ El repositorio incorpora como código de partida el **boilerplate** del curso:
 
 ### Puesta en marcha del código
 
+El proyecto se gestiona con **[Bun](https://bun.sh)** en lugar de npm. Toda la aplicación Angular vive dentro de la carpeta `boilerplate/`.
+
 ```bash
-npm install
-npm start          # aplicación en http://localhost:4200
-npm run pruebas    # pruebas del dominio, sin Angular
-npm run build      # compilación de producción
+cd boilerplate
+bun install
+bun dev            # aplicación en http://localhost:4200 (alias de bun start)
+bun run pruebas    # pruebas del dominio, sin Angular
+bun run build      # compilación de producción
 ```
+
+> Equivalencias rápidas:
+> - `bun install` ≡ `npm install`
+> - `bun add <paquete>` ≡ `npm install <paquete>`
+> - `bun dev` ≡ `bun start` ≡ `npm start`
+> - `bun run <script>` ≡ `npm run <script>`
 
 El proyecto arranca con **adaptadores en memoria**, por lo que no necesita base de datos, credenciales ni conexión a internet.
 
@@ -40,17 +49,20 @@ El proyecto arranca con **adaptadores en memoria**, por lo que no necesita base 
 .
 ├── analisis-de-sistema/     # Documentación de la Etapa 1 (docs)
 ├── arquitectura/            # Documentación de la Etapa 2 (docs)
+├── boilerplate/             # Código fuente Angular (boilerplate)
+│   ├── src/
+│   │   └── app/
+│   │       ├── dominio/         # Reglas del negocio + contratos
+│   │       ├── aplicacion/      # Casos de uso
+│   │       ├── infraestructura/ # Adaptadores (memoria, HTTP, pagos, etc.)
+│   │       └── presentacion/    # Componentes Angular
+│   ├── public/
+│   ├── angular.json
+│   ├── package.json
+│   ├── bun.lock
+│   └── tsconfig*.json
 ├── images/                  # Recursos gráficos y diagramas Mermaid
-├── src/                     # Código fuente Angular (boilerplate)
-│   └── app/
-│       ├── dominio/         # Reglas del negocio + contratos
-│       ├── aplicacion/      # Casos de uso
-│       ├── infraestructura/ # Adaptadores (memoria, HTTP, pagos, etc.)
-│       └── presentacion/    # Componentes Angular
-├── public/
-├── angular.json
-├── package.json
-├── tsconfig*.json
+├── GUIA-003-ASF.pdf         # Guía de laboratorio
 └── README.md
 ```
 

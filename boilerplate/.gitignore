@@ -1,0 +1,36 @@
+# Reglas para el proyecto Angular (boilerplate/)
+# Aplican a partir de esta carpeta hacia abajo.
+
+# Compiled output
+/dist
+/dist-pruebas
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# Angular CLI
+/.angular/cache
+
+# Tests / cobertura
+/coverage
+/testem.log
+/typings
+/libpeerconnection.log
+
+# IDEs
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Misc
+.sass-cache/
+/connect.lock

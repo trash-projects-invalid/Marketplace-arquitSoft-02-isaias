@@ -1,24 +1,13 @@
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Reglas para todo el repositorio
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Sistema
+.DS_Store
+Thumbs.db
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# Documentación: se versiona la guía por nombre explícito (ver más abajo)
+*.pdf
 
-# Visual Studio Code
+# IDEs a nivel de repo
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -26,18 +15,9 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+# Logs generales
+*.log
 
-# System files
-.DS_Store
-Thumbs.db
-
-# Documentación
-*.pdf
+# Las reglas específicas del proyecto Angular viven en boilerplate/.gitignore
+# La guía del laboratorio sí se versiona explícitamente
+!GUIA-003-ASF.pdf

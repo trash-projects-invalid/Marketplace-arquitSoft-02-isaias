@@ -3,7 +3,7 @@
 > Documento correspondiente al **PASO 5** de la GUIA-003-ASF.
 > Define **cómo se organizan internamente** las responsabilidades y dependencias de la aplicación web Angular.
 
-![Enfoque arquitectónico](../../images/enfoque.png)
+![Enfoque arquitectónico](../images/enfoque.png)
 
 ## 1. Enfoque seleccionado: **Clean Architecture (Arquitectura Limpia)**
 

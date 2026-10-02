@@ -16,7 +16,45 @@ GoPet como referencia funcional.
 
 Arquitectura de Software
 
-## Documentación del laboratorio (GUIA 02)
+## Implementación de referencia (boilerplate)
+
+El repositorio incorpora como código de partida el **boilerplate** del curso:
+
+- Origen: <https://github.com/devlizbethjaico/boilerplate.git>
+- Aplicación Angular 18 que aplica **Clean Architecture** sobre cuatro capas: `dominio/`, `aplicacion/`, `infraestructura/` y `presentacion/`.
+
+### Puesta en marcha del código
+
+```bash
+npm install
+npm start          # aplicación en http://localhost:4200
+npm run pruebas    # pruebas del dominio, sin Angular
+npm run build      # compilación de producción
+```
+
+El proyecto arranca con **adaptadores en memoria**, por lo que no necesita base de datos, credenciales ni conexión a internet.
+
+## Estructura del proyecto
+
+```
+.
+├── analisis-de-sistema/     # Documentación de la Etapa 1 (docs)
+├── arquitectura/            # Documentación de la Etapa 2 (docs)
+├── images/                  # Recursos gráficos y diagramas Mermaid
+├── src/                     # Código fuente Angular (boilerplate)
+│   └── app/
+│       ├── dominio/         # Reglas del negocio + contratos
+│       ├── aplicacion/      # Casos de uso
+│       ├── infraestructura/ # Adaptadores (memoria, HTTP, pagos, etc.)
+│       └── presentacion/    # Componentes Angular
+├── public/
+├── angular.json
+├── package.json
+├── tsconfig*.json
+└── README.md
+```
+
+## Documentación del laboratorio
 
 La documentación se organiza siguiendo las dos etapas del laboratorio:
 
@@ -33,6 +71,7 @@ La documentación se organiza siguiendo las dos etapas del laboratorio:
 ### Etapa 2 — Diseño arquitectónico inicial
 
 - [Arquitectura inicial (diagrama Mermaid)](arquitectura/arquitectura-inicial.md)
+- [Estilo arquitectónico](arquitectura/estilo-arquitectonico.md)
 - [Código fuente del diagrama](images/arquitectura_sistema.mmd)
 
 ## Vista previa del diagrama de arquitectura

@@ -1,107 +1,86 @@
 # Estilo arquitectónico del sistema
 
-## 1. Estilo seleccionado: **Monolito modular**
+> Documento correspondiente al **PASO 4** de la GUIA-003-ASF.
+> Define la **forma global** del sistema: cómo se organiza y se despliega el backend.
 
-El marketplace se construye como un **único artefacto desplegable**, organizado internamente en **módulos de negocio bien delimitados** (Catálogo, Carrito, Pedidos, Pagos, Usuarios). Los módulos comparten el mismo proceso y la misma base de datos, pero se mantienen **débilmente acoplados** mediante interfaces internas, lo que permite que el sistema pueda:
+![Estilo arquitectónico](../images/estilo.png)
 
-- Desplegarse como una sola unidad.
-- Escalarse horizontalmente levantando varias réplicas detrás de un balanceador.
-- Evolucionar y probar cada módulo de forma independiente dentro del mismo repositorio.
+## 1. Estilo seleccionado: **Monolito modular por capas**
 
-## 2. ¿Por qué monolito modular?
+El backend del marketplace se construye como un **«monolito»** ejecutado en un **único proceso Node.js 20 LTS con Express**, organizado internamente en **tres capas** y **módulos de negocio** débilmente acoplados.
+
+- **Una sola aplicación · un solo proceso · un solo despliegue.**
+- **Una sola base de datos PostgreSQL** (`marketplace_db`).
+- Una **API REST** única (prefijo `/api/v1/*`) consumida desde la aplicación web.
+
+## 2. Módulos y capas del monolito
+
+Cada módulo de negocio (usuarios, sellers, catálogo, carrito, pedidos) se divide en tres capas con un único archivo por rol:
+
+| Capa                             | Responsabilidad                                                       | Archivos por módulo                             |
+| -------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| **1. Capa de Presentación**      | Recibe peticiones HTTP, autentica, valida la entrada y responde JSON. | `<modulo>.routes.js` · `<modulo>.controller.js` |
+| **2. Capa de Lógica de Negocio** | Reglas de negocio y coordinación entre módulos.                       | `<modulo>.service.js`                           |
+| **3. Capa de Datos**             | Persistencia y consultas a la base de datos.                          | `<modulo>.repository.js`                        |
+
+Además, todos los módulos comparten:
+
+- **Middlewares Express** transversales: `cors`, `express.json()`, `auth (JWT)`, `validación de entrada`, `manejo de errores`, `logger`.
+- **Acceso a datos compartido**: Sequelize (ORM) con modelos y pool de conexiones en `src/shared/db`.
+
+## 3. Módulos de negocio
+
+| Módulo     | Service                         |
+| ---------- | ------------------------------- |
+| `usuarios` | Registro, login y roles.        |
+| `sellers`  | Alta de tiendas y validación.   |
+| `catalogo` | Productos, categorías y stock.  |
+| `carrito`  | Ítems y totales.                |
+| `pedidos`  | Checkout, estados y pago/envío. |
+
+## 4. Sistemas externos
+
+| Sistema externo                      | Protocolo    | Módulo que lo consume |
+| ------------------------------------ | ------------ | --------------------- |
+| Pasarela de pagos (Culqi / Niubiz)   | HTTPS / REST | `pedidos`             |
+| Servicio de envíos (API del courier) | HTTPS / REST | `pedidos`             |
+
+## 5. Reglas del estilo
+
+1. **Cada capa solo invoca a la capa inmediatamente inferior.**
+2. **Un módulo no accede al repository ni a las tablas de otro módulo.**
+3. **La comunicación entre módulos se hace llamando a su service**, no a su repository.
+4. **Todo se ejecuta en un único proceso Node.js con una única base de datos.**
+
+## 6. ¿Por qué monolito modular?
 
 La selección se justifica a partir de los drivers arquitectónicos definidos en [`analisis-de-sistema/06-driver-arquitectonicos.md`](../analisis-de-sistema/06-driver-arquitectonicos.md):
 
-| Driver                | Aporte a la decisión                                                                                                         |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| DA01 – Escalabilidad  | Un monolito se replica fácilmente detrás de un balanceador y escala horizontal cuando hay picos en campañas.                 |
-| DA06 – Mantenibilidad | La división en módulos (Catálogo, Carrito, Pedidos, Pagos, Usuarios) reduce el impacto de una modificación sobre el sistema. |
-| DA03 – Seguridad      | Un único perímetro de seguridad simplifica autenticación, autorización y auditoría de acceso.                                |
-| DA04 – Pago externo   | La integración con la pasarela se aísla en un módulo adaptador detrás de un puerto, sin afectar al resto.                    |
-| DA05 – API REST       | El monolito expone una única API REST que sirve a la aplicación web.                                                         |
-| DA02 – Rendimiento    | La alta concurrencia se atiende con caché y optimización interna, sin necesidad de distribuir procesos.                      |
+| Driver                | Aporte a la decisión                                                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| DA01 – Escalabilidad  | Un monolito se replica fácilmente detrás de un balanceador y escala horizontal cuando hay picos en campañas.                   |
+| DA06 – Mantenibilidad | La división en módulos (usuarios, sellers, catálogo, carrito, pedidos) reduce el impacto de una modificación sobre el sistema. |
+| DA03 – Seguridad      | Un único perímetro de seguridad simplifica autenticación (JWT), autorización y auditoría de acceso.                            |
+| DA04 – Pago externo   | La integración con la pasarela se aísla en el `pedidos.service.js` mediante un adaptador HTTP.                                 |
+| DA05 – API REST       | El monolito expone una única API REST que sirve a la aplicación web Angular.                                                   |
+| DA02 – Rendimiento    | La alta concurrencia se atiende con caché y optimización interna, sin necesidad de distribuir procesos.                        |
 
 Un enfoque de **microservicios** se descartó por la complejidad operativa (múltiples despliegues, observabilidad distribuida y consistencia de datos entre servicios) que no se justifica en el alcance actual del marketplace.
 
-## 3. Estructura global del sistema
+## 7. Leyenda del diagrama
 
-```mermaid
-flowchart TB
+| Símbolo                          | Significado                                           |
+| -------------------------------- | ----------------------------------------------------- |
+| Flecha sólida →                  | Llamada síncrona entre capas (de arriba hacia abajo). |
+| Flecha discontinua verde - - - > | Uso entre módulos (solo a través de su service).      |
+| Recuadro discontinuo             | Límite de módulo (carpeta `src/modules/<módulo>`).    |
+| Caja gris                        | Sistema externo (fuera del monolito).                 |
 
-    subgraph CLIENTE["CLIENTE (Aplicación Web)"]
-        Web["SPA / App Web"]
-    end
+## 8. Relación con el enfoque arquitectónico (PASO 5)
 
-    subgraph BALANCEO["BALANCEADOR / API GATEWAY"]
-        LB["Load Balancer + API Gateway"]
-    end
+El monolito define _la forma global_ del backend. La forma en que se organiza **internamente** cada aplicación (en este caso, la **aplicación web Angular**) se describe en [`enfoque/enfoque-arquitectonico.md`](./enfoque/enfoque-arquitectonico.md):
 
-    subgraph MONOLITO["MONOLITO MODULAR (una sola aplicación desplegable)"]
-        direction TB
+- **Estilo arquitectónico (PASO 4)** → monolito modular por capas (backend Node.js + Express).
+- **Enfoque arquitectónico (PASO 5)** → Clean Architecture aplicado en la aplicación web Angular, descrito en [`enfoque/enfoque-arquitectonico.md`](./enfoque/enfoque-arquitectonico.md).
 
-        subgraph PRESENTACION["Capa de Presentación"]
-            APIREST["API REST"]
-        end
-
-        subgraph MODULOS["Módulos de negocio"]
-            Usuarios["Usuarios"]
-            Sellers["Sellers"]
-            Catalogo["Catálogo"]
-            Carrito["Carrito"]
-            Pedidos["Pedidos"]
-            Pagos["Pagos"]
-        end
-
-        subgraph INFRA["Capa de Infraestructura"]
-            Cache["Caché (Redis)"]
-            Adaptadores["Adaptadores externos"]
-        end
-    end
-
-    subgraph DATOS["DATOS"]
-        BD[("Base de datos")]
-    end
-
-    subgraph EXTERNOS["SISTEMAS EXTERNOS"]
-        PagoExt["Pasarela de pago"]
-        ERP["ERP"]
-        Envio["Servicio de envío"]
-        Facturacion["Servicio de Facturación"]
-    end
-
-    Web -->|"HTTPS"| LB
-    LB -->|"REST"| APIREST
-    APIREST --> MODULOS
-    MODULOS --> Cache
-    MODULOS --> Adaptadores
-    MODULOS --> BD
-
-    Catalogo -.->|"sincroniza stock"| ERP
-    Pagos -.->|"procesa pago"| PagoExt
-    Pedidos -.->|"gestiona entrega"| Envio
-    Pedidos -.->|"emite comprobante"| Facturacion
-
-    classDef darkBox fill:#1e1e1e,stroke:#ffffff,stroke-width:2px,color:#ffffff
-    class CLIENTE,BALANCEO,MONOLITO,DATOS,EXTERNOS darkBox
-    class Web,LB,APIREST,Usuarios,Sellers,Catalogo,Carrito,Pedidos,Pagos,Cache,Adaptadores,BD,PagoExt,ERP,Envio,Facturacion darkBox
-```
-
-## 4. Despliegue
-
-| Aspecto            | Decisión                                                                                    |
-| ------------------ | ------------------------------------------------------------------------------------------- |
-| Tipo de despliegue | Aplicación única (monolito) ejecutándose en un contenedor o runtime.                        |
-| Escalabilidad      | Réplicas horizontales detrás de un balanceador / API Gateway.                               |
-| Persistencia       | Una única base de datos relacional (PostgreSQL).                                            |
-| Caché              | Servicio de caché independiente (Redis) consumido por los módulos.                          |
-| Integraciones      | Adaptadores en la capa de infraestructura hacia pasarela de pago, ERP, envío y facturación. |
-| Frontend           | Aplicación web separada que consume la API REST del monolito.                               |
-
-## 5. Relación con el enfoque arquitectónico (PASO 5)
-
-El monolito se organiza internamente en capas (presentación, aplicación, dominio e infraestructura) según el enfoque **Clean Architecture** que se documentará en `arquitectura/enfoque/enfoque-arquitectonico.md` (PASO 5 de la guía):
-
-- **Estilo arquitectónico (PASO 4)** → define _la forma global_ del sistema: monolito modular.
-- **Enfoque arquitectónico (PASO 5)** → define _cómo se organizan_ internamente las responsabilidades y dependencias: Clean Architecture.
-
-Ambos niveles son complementarios y responden a drivers distintos: el estilo a la escalabilidad y desplegabilidad; el enfoque a la mantenibilidad y la separación de responsabilidades.
+Ambos niveles son complementarios: el estilo responde a drivers de escalabilidad y desplegabilidad; el enfoque responde a drivers de mantenibilidad y separación de responsabilidades.

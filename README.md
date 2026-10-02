@@ -28,6 +28,7 @@ La documentación se organiza siguiendo las dos etapas del laboratorio:
 - [Atributos de calidad](analisis-de-sistema/04-atributos-de-calidad.md)
 - [Restricciones](analisis-de-sistema/05-restricciones.md)
 - [Drivers arquitectónicos](analisis-de-sistema/06-driver-arquitectonicos.md)
+- [Decisiones arquitectónicas (ADR)](analisis-de-sistema/07-decision-arquitectonica.md)
 
 ### Etapa 2 — Diseño arquitectónico inicial
 

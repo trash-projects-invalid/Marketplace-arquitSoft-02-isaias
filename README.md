@@ -21,7 +21,7 @@ Arquitectura de Software
 El repositorio incorpora como código de partida el **boilerplate** del curso:
 
 - Origen: <https://github.com/devlizbethjaico/boilerplate.git>
-- Aplicación Angular 18 que aplica **Clean Architecture** sobre cuatro capas: `dominio/`, `aplicacion/`, `infraestructura/` y `presentacion/`.
+- Aplicación Angular 22 + TypeScript 6 que aplica **Clean Architecture** sobre cuatro capas: `dominio/`, `aplicacion/`, `infraestructura/` y `presentacion/`.
 
 ### Puesta en marcha del código
 

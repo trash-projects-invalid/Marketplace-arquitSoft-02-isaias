@@ -1,6 +1,5 @@
 # Estilo arquitectónico del sistema
 
-> Documento correspondiente al **PASO 4** de la GUIA-003-ASF.
 > Define la **forma global** del sistema: cómo se organiza y se despliega el backend.
 
 ![Estilo arquitectónico](../images/estilo.png)

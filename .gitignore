@@ -17,7 +17,3 @@ Thumbs.db
 
 # Logs generales
 *.log
-
-# Las reglas específicas del proyecto Angular viven en boilerplate/.gitignore
-# La guía del laboratorio sí se versiona explícitamente
-!GUIA-003-ASF.pdf

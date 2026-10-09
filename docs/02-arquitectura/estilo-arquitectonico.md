@@ -77,9 +77,9 @@ Un enfoque de **microservicios** se descartó por la complejidad operativa (múl
 
 ## 8. Relación con el enfoque arquitectónico (PASO 5)
 
-El monolito define _la forma global_ del backend. La forma en que se organiza **internamente** cada aplicación (en este caso, la **aplicación web Angular**) se describe en [`enfoque/enfoque-arquitectonico.md`](./enfoque/enfoque-arquitectonico.md):
+El monolito define _la forma global_ del backend. La forma en que se organiza **internamente** cada aplicación (en este caso, la **aplicación web Angular**) se describe en [`enfoque-arquitectonico.md`](./enfoque-arquitectonico.md):
 
 - **Estilo arquitectónico (PASO 4)** → monolito modular por capas (backend Node.js + Express).
-- **Enfoque arquitectónico (PASO 5)** → Clean Architecture aplicado en la aplicación web Angular, descrito en [`enfoque/enfoque-arquitectonico.md`](./enfoque/enfoque-arquitectonico.md).
+- **Enfoque arquitectónico (PASO 5)** → Clean Architecture aplicado en la aplicación web Angular, descrito en [`enfoque-arquitectonico.md`](./enfoque-arquitectonico.md).
 
 Ambos niveles son complementarios: el estilo responde a drivers de escalabilidad y desplegabilidad; el enfoque responde a drivers de mantenibilidad y separación de responsabilidades.

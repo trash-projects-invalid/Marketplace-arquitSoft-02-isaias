@@ -46,7 +46,7 @@ Cambiar de proveedor se resume en descomentar/comentar líneas; ni el dominio ni
 
 ## 4. Sistema externo (visto desde la app)
 
-La aplicación Angular se comunica con el backend a través de la **API REST del monolito** documentada en [`../estilo-arquitectonico.md`](../estilo-arquitectonico.md):
+La aplicación Angular se comunica con el backend a través de la **API REST del monolito** documentada en [`estilo-arquitectonico.md`](estilo-arquitectonico.md):
 
 | Endpoint                  | Uso                           |
 | ------------------------- | ----------------------------- |
@@ -83,5 +83,5 @@ Estas reglas se verifican mecánicamente con `bun run pruebas`, que compila **so
 
 | Nivel                               | Documento                                                    | Pregunta que responde                                                     |
 | ----------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------- |
-| **Estilo arquitectónico** (PASO 4)  | [`../estilo-arquitectonico.md`](../estilo-arquitectonico.md) | ¿Cómo se organiza y despliega **globalmente** el sistema?                 |
+| **Estilo arquitectónico** (PASO 4)  | [`estilo-arquitectonico.md`](estilo-arquitectonico.md) | ¿Cómo se organiza y despliega **globalmente** el sistema?                 |
 | **Enfoque arquitectónico** (PASO 5) | Este documento                                               | ¿Cómo se organizan **internamente** las responsabilidades y dependencias? |

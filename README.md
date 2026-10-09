@@ -1,136 +1,61 @@
 # Marketplace de productos para mascotas
 
-## Nombre
+Marketplace académico de productos para mascotas, con GoPet como referencia funcional. Proyecto del curso Arquitectura de Software, desarrollado por Isaias Ramos Lopez.
 
-isaias ramos lopez
+## Organización del repositorio
 
-## Descripción
+La documentación del análisis, arquitectura y diseño vive en `docs/`. El ejemplo ejecutable de Clean Architecture vive en `tecnologia/`.
 
-Marketplace académico de productos para mascotas.
+```text
+.
+├── docs/
+│   ├── 01-analisis-de-sistema/
+│   ├── 02-arquitectura/
+│   ├── 03-diseño-de-software/diseño-interno/
+│   ├── 04-modelo-c4/
+│   └── imagenes/
+├── tecnologia/clean-architecture/  # Angular + TypeScript
+├── GUIA-003-ASF.pdf
+└── GUIA-004-ASF.pdf
+```
 
-## Caso de estudio
+## Ejecutar el ejemplo Clean Architecture
 
-GoPet como referencia funcional.
-
-## Curso
-
-Arquitectura de Software
-
-## Implementación de referencia (boilerplate)
-
-El repositorio incorpora como código de partida el **boilerplate** del curso:
-
-- Origen: <https://github.com/devlizbethjaico/boilerplate.git>
-- Aplicación Angular 22 + TypeScript 6 que aplica **Clean Architecture** sobre cuatro capas: `dominio/`, `aplicacion/`, `infraestructura/` y `presentacion/`.
-
-### Puesta en marcha del código
-
-El proyecto se gestiona con **[Bun](https://bun.sh)** en lugar de npm. Toda la aplicación Angular vive dentro de la carpeta `boilerplate/`.
+El ejemplo Angular se gestiona con [Bun](https://bun.sh) y usa adaptadores en memoria para funcionar sin base de datos ni credenciales.
 
 ```bash
-cd boilerplate
+cd tecnologia/clean-architecture
 bun install
-bun dev            # aplicación en http://localhost:4200 (alias de bun start)
-bun run pruebas    # pruebas del dominio, sin Angular
-bun run build      # compilación de producción
+bun dev             # http://localhost:4200
+bun run pruebas     # pruebas del dominio, sin Angular
+bun run build       # compilación de producción
 ```
 
-> Equivalencias rápidas:
-> - `bun install` ≡ `npm install`
-> - `bun add <paquete>` ≡ `npm install <paquete>`
-> - `bun dev` ≡ `bun start` ≡ `npm start`
-> - `bun run <script>` ≡ `npm run <script>`
+## Documentación
 
-El proyecto arranca con **adaptadores en memoria**, por lo que no necesita base de datos, credenciales ni conexión a internet.
+### Análisis del sistema
 
-## Estructura del proyecto
+- [Actores](docs/01-analisis-de-sistema/01-actores.md)
+- [Historias de usuario](docs/01-analisis-de-sistema/02-historias-del-usuario.md)
+- [Requisitos funcionales](docs/01-analisis-de-sistema/03-requisitos-funcionales.md)
+- [Atributos de calidad](docs/01-analisis-de-sistema/04-atributos-de-calidad.md)
+- [Restricciones](docs/01-analisis-de-sistema/05-restricciones.md)
+- [Drivers arquitectónicos](docs/01-analisis-de-sistema/06-driver-arquitectonicos.md)
+- [Decisiones arquitectónicas (ADR)](docs/01-analisis-de-sistema/07-decision-arquitectonica.md)
+- [Escenarios medibles de calidad](docs/01-analisis-de-sistema/08-escenarios-atributos-calidad.md)
 
-```
-.
-├── analisis-de-sistema/     # Documentación de la Etapa 1 (docs)
-├── arquitectura/            # Documentación de la Etapa 2 (docs)
-├── boilerplate/             # Código fuente Angular (boilerplate)
-│   ├── src/
-│   │   └── app/
-│   │       ├── dominio/         # Reglas del negocio + contratos
-│   │       ├── aplicacion/      # Casos de uso
-│   │       ├── infraestructura/ # Adaptadores (memoria, HTTP, pagos, etc.)
-│   │       └── presentacion/    # Componentes Angular
-│   ├── public/
-│   ├── angular.json
-│   ├── package.json
-│   ├── bun.lock
-│   └── tsconfig*.json
-├── images/                  # Recursos gráficos y diagramas Mermaid
-├── GUIA-003-ASF.pdf         # Guía de laboratorio
-└── README.md
-```
+### Arquitectura y diseño
 
-## Documentación del laboratorio
+- [Arquitectura inicial](docs/02-arquitectura/arquitectura-inicial.md)
+- [Estilo arquitectónico](docs/02-arquitectura/estilo-arquitectonico.md)
+- [Enfoque Clean Architecture](docs/02-arquitectura/enfoque-arquitectonico.md)
+- [Componentes arquitectónicos](docs/02-arquitectura/componentes-arquitectonicos.md)
+- [Diseño interno de módulos](docs/03-diseño-de-software/diseño-interno/diseño-interno-de-modulos.md)
+- [Patrones de diseño](docs/03-diseño-de-software/diseño-interno/patrones-de-diseño.md)
+- [Principios SOLID](docs/03-diseño-de-software/diseño-interno/principios-de-diseño.md)
+- [Modelo C4](docs/04-modelo-c4/README.md)
+- [Recursos gráficos y fuente Mermaid](docs/imagenes/)
 
-La documentación se organiza siguiendo las dos etapas del laboratorio:
+## Alcance de la implementación
 
-### Etapa 1 — Análisis del sistema
-
-- [Actores del sistema](analisis-de-sistema/01-actores.md)
-- [Historias de usuario](analisis-de-sistema/02-historias-del-usuario.md)
-- [Requisitos funcionales](analisis-de-sistema/03-requisitos-funcionales.md)
-- [Atributos de calidad](analisis-de-sistema/04-atributos-de-calidad.md)
-- [Restricciones](analisis-de-sistema/05-restricciones.md)
-- [Drivers arquitectónicos](analisis-de-sistema/06-driver-arquitectonicos.md)
-- [Decisiones arquitectónicas (ADR)](analisis-de-sistema/07-decision-arquitectonica.md)
-
-### Etapa 2 — Diseño arquitectónico inicial
-
-- [Arquitectura inicial (diagrama Mermaid)](arquitectura/arquitectura-inicial.md)
-- [Estilo arquitectónico (PASO 4)](arquitectura/estilo-arquitectonico.md)
-- [Enfoque arquitectónico — Clean Architecture (PASO 5)](arquitectura/enfoque/enfoque-arquitectonico.md)
-- [Código fuente del diagrama](images/arquitectura_sistema.mmd)
-
-## Vista previa del diagrama de arquitectura
-
-```mermaid
-flowchart TD
-
-    subgraph ACTORES["ACTORES"]
-        Cliente["Cliente"]
-        Seller["Seller"]
-        Admin["Administrador"]
-    end
-
-    subgraph PRESENTACION["PRESENTACIÓN"]
-        Web["Aplicación Web → API REST"]
-    end
-
-    subgraph NEGOCIO["LÓGICA DE NEGOCIO"]
-        Usuarios["Usuarios"]
-        Sellers["Sellers"]
-        Catalogo["Catálogo"]
-        Carrito["Carrito"]
-        Pedidos["Pedidos"]
-    end
-
-    subgraph DATOS["DATOS"]
-        BD["Base de datos"]
-    end
-
-    subgraph EXTERNOS["SISTEMAS EXTERNOS"]
-        Pago["Pasarela de pago"]
-        ERP["ERP"]
-        Envio["Servicio de envío"]
-        Facturacion["Servicio de Facturación"]
-    end
-
-    ACTORES --> PRESENTACION
-    PRESENTACION --> NEGOCIO
-    NEGOCIO --> DATOS
-
-    Catalogo -->|"consulta stock"| ERP
-    Pedidos -->|"procesa pago"| Pago
-    Pedidos -->|"gestiona entrega"| Envio
-    Pedidos -->|"emite comprobante"| Facturacion
-
-    classDef darkBox fill:#1e1e1e,stroke:#ffffff,stroke-width:2px,color:#ffffff
-    class ACTORES,PRESENTACION,NEGOCIO,DATOS,EXTERNOS darkBox
-    class Cliente,Seller,Admin,Web,Usuarios,Sellers,Catalogo,Carrito,Pedidos,BD,Pago,ERP,Envio,Facturacion darkBox
-```
+El código es un ejemplo de capas Dominio, Aplicación, Infraestructura y Presentación para catálogo, carrito y compra. Los diagramas C4 describen la arquitectura objetivo propuesta, que incluye API REST, almacenamiento e integraciones externas aún no implementadas. Los umbrales de calidad están marcados como objetivos pendientes de validación.
